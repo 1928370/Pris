@@ -7,178 +7,296 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Montserrat:wght@300;400;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Montserrat:wght@300;400;600&family=Playfair+Display:wght@700;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         
         body {
             font-family: 'Montserrat', sans-serif;
-            background-color: #fff5f5;
-            color: #555;
+            background: linear-gradient(135deg, #fff5f5 0%, #ffe0e6 50%, #fff5f5 100%);
+            color: #333;
             overflow-x: hidden;
+            line-height: 1.6;
         }
         
         .dancing-font {
             font-family: 'Dancing Script', cursive;
         }
         
+        .playfair-font {
+            font-family: 'Playfair Display', serif;
+            font-weight: 900;
+            letter-spacing: -1px;
+        }
+        
         .heart-beat {
-            animation: heartbeat 1.5s infinite;
+            animation: heartbeat 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
         }
         
         @keyframes heartbeat {
-            0% { transform: scale(1); }
-            25% { transform: scale(1.1); }
-            50% { transform: scale(1); }
-            75% { transform: scale(1.1); }
-            100% { transform: scale(1); }
+            0% { transform: scale(1); opacity: 1; }
+            25% { transform: scale(1.15); }
+            50% { transform: scale(1); opacity: 1; }
+            75% { transform: scale(1.15); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        .heart-float {
+            animation: heartFloat 3s ease-in-out infinite;
+        }
+        
+        @keyframes heartFloat {
+            0%, 100% { transform: translateY(0px); opacity: 0.6; }
+            50% { transform: translateY(-20px); opacity: 1; }
         }
         
         .fade-in {
-            animation: fadeIn 2s;
+            animation: fadeIn 2.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
         
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .slide-in-left {
+            animation: slideInLeft 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        .slide-in-right {
+            animation: slideInRight 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        .glow {
+            animation: glow 3s ease-in-out infinite;
+        }
+        
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 105, 180, 0.5); }
+            50% { box-shadow: 0 0 40px rgba(255, 20, 147, 0.8); }
         }
         
         .polaroid {
             background: white;
-            padding: 1rem 1rem 3rem 1rem;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            transform: rotate(-2deg);
-            transition: all 0.3s ease;
+            padding: 1.5rem 1.5rem 3.5rem 1.5rem;
+            box-shadow: 0 10px 30px rgba(255, 20, 147, 0.3);
+            transform: rotate(-3deg);
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+            border-radius: 8px;
+        }
+        
+        .polaroid::before {
+            content: '';
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 8px;
+            background: repeating-linear-gradient(90deg, rgba(255,255,255,0.8) 0px, rgba(255,255,255,0.8) 10px, transparent 10px, transparent 20px);
         }
         
         .polaroid:hover {
-            transform: rotate(0deg) scale(1.05);
+            transform: rotate(0deg) scale(1.08);
+            box-shadow: 0 20px 50px rgba(255, 20, 147, 0.6);
         }
         
         .distance-line {
-            height: 2px;
-            background: linear-gradient(90deg, #ff6b6b, #f8a5c2, #ff6b6b);
+            height: 3px;
+            background: linear-gradient(90deg, #ff6b6b 0%, #f8a5c2 25%, #ff1493 50%, #f8a5c2 75%, #ff6b6b 100%);
             position: relative;
+            margin: 2rem 0;
+            box-shadow: 0 0 20px rgba(255, 20, 147, 0.4);
         }
         
         .distance-line::after {
             content: '';
             position: absolute;
-            width: 15px;
-            height: 15px;
-            background: #ff6b6b;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, #ff1493, #ff69b4);
             border-radius: 50%;
-            top: -6px;
+            top: -8px;
             left: 50%;
             transform: translateX(-50%);
+            box-shadow: 0 0 15px rgba(255, 20, 147, 0.8);
+            animation: pulsing 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulsing {
+            0%, 100% { transform: translateX(-50%) scale(1); }
+            50% { transform: translateX(-50%) scale(1.2); }
+        }
+        
+        .text-glow {
+            text-shadow: 0 0 20px rgba(255, 20, 147, 0.5);
         }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
-    <header class="bg-gradient-to-r from-pink-500 to-rose-500 text-white py-8 text-center shadow-lg">
-        <div class="container mx-auto px-4">
-            <h1 class="dancing-font text-5xl md:text-6xl mb-2 fade-in">Para Priscila</h1>
-            <p class="text-xl opacity-90">Um sentimento que atravessa distâncias</p>
+    <header class="bg-gradient-to-r from-pink-600 via-rose-500 to-pink-600 text-white py-12 text-center shadow-2xl relative overflow-hidden">
+        <div class="absolute inset-0 opacity-30">
+            <div class="absolute top-5 left-10 text-4xl animate-bounce heart-float">💕</div>
+            <div class="absolute top-20 right-12 text-3xl animate-bounce heart-float" style="animation-delay: 0.2s">💖</div>
+            <div class="absolute bottom-10 left-20 text-3xl animate-bounce heart-float" style="animation-delay: 0.4s">💗</div>
+            <div class="absolute bottom-5 right-16 text-4xl animate-bounce heart-float" style="animation-delay: 0.6s">💝</div>
+        </div>
+        <div class="container mx-auto px-4 relative z-10">
+            <h1 class="playfair-font text-6xl md:text-7xl mb-3 fade-in text-glow">Para Priscila</h1>
+            <p class="dancing-font text-2xl mb-2 fade-in text-white" style="animation-delay: 0.3s">Um sentimento puro e verdadeiro</p>
+            <p class="text-lg opacity-95 fade-in" style="animation-delay: 0.5s">Que atravessa os 68km e toca meu coração eternamente</p>
         </div>
     </header>
 
     <main class="flex-grow container mx-auto px-4 py-12 max-w-4xl">
         <section class="mb-16 text-center">
-            <div class="inline-block mb-8">
-                <div class="polaroid">
-                    <div class="w-64 h-64 bg-gradient-to-br from-pink-200 to-rose-300 flex items-center justify-center">
-                        <i class="fas fa-heart text-6xl text-rose-600 heart-beat"></i>
+            <div class="inline-block mb-12 slide-in-left">
+                <div class="polaroid glow">
+                    <div class="w-80 h-80 bg-gradient-to-br from-pink-200 via-rose-200 to-pink-300 flex items-center justify-center rounded-lg relative">
+                        <div class="absolute inset-0 bg-gradient-to-t from-pink-500/10 to-transparent rounded-lg"></div>
+                        <i class="fas fa-heart text-8xl text-rose-600 heart-beat relative z-10"></i>
                     </div>
-                    <p class="mt-2 dancing-font text-xl text-gray-700">Carreta da Alegria</p>
+                    <p class="mt-4 dancing-font text-2xl text-rose-700 font-semibold">Carreta da Alegria</p>
+                    <p class="text-sm text-gray-600 mt-1">Onde nossos destinos se cruzaram</p>
                 </div>
             </div>
             
-            <div class="distance-line w-3/4 mx-auto my-12"></div>
+            <div class="distance-line w-4/5 mx-auto my-12"></div>
             
-            <div class="flex justify-between items-center px-8 mb-12">
-                <div class="text-center">
-                    <div class="w-16 h-16 rounded-full bg-rose-100 flex items-center justify-center mx-auto mb-2">
-                        <i class="fas fa-map-marker-alt text-rose-600"></i>
+            <div class="flex justify-between items-center px-4 md:px-8 mb-16 gap-4">
+                <div class="text-center slide-in-left">
+                    <div class="w-20 h-20 rounded-full bg-gradient-to-br from-rose-200 to-rose-400 flex items-center justify-center mx-auto mb-3 shadow-lg hover:shadow-2xl transition-all transform hover:scale-110 duration-300">
+                        <i class="fas fa-map-marker-alt text-rose-700 text-2xl"></i>
                     </div>
-                    <p class="font-semibold">Araguari</p>
+                    <p class="font-semibold text-lg text-gray-800">Araguari</p>
+                    <p class="text-sm text-gray-600">Seu Lugar</p>
                 </div>
-                <div class="text-center">
-                    <div class="w-16 h-16 rounded-full bg-pink-100 flex items-center justify-center mx-auto mb-2">
-                        <i class="fas fa-heart text-pink-600"></i>
+                <div class="text-center slide-in-right">
+                    <div class="w-20 h-20 rounded-full bg-gradient-to-br from-pink-200 to-pink-400 flex items-center justify-center mx-auto mb-3 shadow-lg hover:shadow-2xl transition-all transform hover:scale-110 duration-300 glow">
+                        <i class="fas fa-heart text-pink-600 text-2xl heart-beat"></i>
                     </div>
-                    <p class="dancing-font text-xl">68km</p>
+                    <p class="dancing-font text-2xl font-bold text-pink-600">68km</p>
+                    <p class="text-sm text-gray-600">De puro amor</p>
                 </div>
-                <div class="text-center">
-                    <div class="w-16 h-16 rounded-full bg-rose-100 flex items-center justify-center mx-auto mb-2">
-                        <i class="fas fa-map-marker-alt text-rose-600"></i>
+                <div class="text-center slide-in-left" style="animation-delay: 0.2s">
+                    <div class="w-20 h-20 rounded-full bg-gradient-to-br from-rose-200 to-rose-400 flex items-center justify-center mx-auto mb-3 shadow-lg hover:shadow-2xl transition-all transform hover:scale-110 duration-300">
+                        <i class="fas fa-map-marker-alt text-rose-700 text-2xl"></i>
                     </div>
-                    <p class="font-semibold">Tupaciguara</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="bg-white rounded-xl shadow-md p-8 mb-12 relative overflow-hidden">
-            <div class="absolute -top-10 -right-10 w-32 h-32 bg-pink-100 rounded-full opacity-30"></div>
-            <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-rose-100 rounded-full opacity-30"></div>
-            
-            <h2 class="dancing-font text-3xl text-center mb-6 text-rose-700 relative z-10">O Que Sinto</h2>
-            
-            <div class="space-y-6 text-lg leading-relaxed relative z-10">
-                <p>Priscila,</p>
-                
-                <p>Não foram apenas 68km que nos separaram desde aquele dia na Carreta da Alegria. Foram sorrisos que cruzaram no meio da multidão, olhares que se encontraram por acaso, e um sentimento que surgiu sem pedir licença.</p>
-                
-                <p>Sei que a vida nos colocou em caminhos diferentes, com histórias distintas e responsabilidades que cada um carrega. Mas quero que saiba que o que sinto por você é verdadeiro, puro e respeitoso.</p>
-                
-                <p>Admiro a mulher que você é - forte, dedicada, cheia de amor para dar. E mesmo que esse sentimento precise ficar guardado em algum lugar entre a realidade e o sonho, ele existe, e é bonito.</p>
-                
-                <p>Obrigado por ter aparecido na minha vida, mesmo que por um breve momento. Você me mostrou que o coração não escolhe hora nem lugar para bater mais forte.</p>
-                
-                <div class="text-center mt-8">
-                    <p class="dancing-font text-2xl text-rose-600">Com carinho,</p>
-                    <p class="dancing-font text-xl">Alguém que te admira</p>
+                    <p class="font-semibold text-lg text-gray-800">Tupaciguara</p>
+                    <p class="text-sm text-gray-600">Onde Estou</p>
                 </div>
             </div>
         </section>
 
-        <section class="text-center">
-            <h3 class="dancing-font text-2xl mb-6">Música</h3>
+        <section class="bg-gradient-to-br from-white to-pink-50 rounded-2xl shadow-2xl p-10 md:p-12 mb-16 relative overflow-hidden fade-in">
+            <div class="absolute -top-20 -right-20 w-64 h-64 bg-pink-200 rounded-full opacity-20 blur-3xl"></div>
+            <div class="absolute -bottom-20 -left-20 w-72 h-72 bg-rose-200 rounded-full opacity-20 blur-3xl"></div>
+            <div class="absolute top-10 right-10 text-6xl opacity-30">💕</div>
             
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-                <div class="bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-                    <video width="100%" height="200" controls>
-                        <source src="vid/Deixa Ela Saber.mp4" type="video/mp4">
-                        Seu navegador não suporta a tag de vídeo.
-                    </video>
-                    <p class="mt-3">A música que nos uniu</p>
-                </div>
-                <div class="bg-white p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-                    <video width="100%" height="200" controls>
-                        <source src="vid/Ao Vivo.mp4" type="video/mp4">
-                        Seu navegador não suporta a tag de vídeo.
-                    </video>
-                    <p class="mt-3">Distancia</p>
-                </div>
+            <h2 class="playfair-font text-5xl text-center mb-2 text-rose-700 text-glow">O Que Sinto</h2>
+            <p class="text-center text-pink-600 text-lg mb-8 relative z-10 italic">Um sentimento que não cabe em palavras</p>
+            
+            <div class="space-y-8 text-lg leading-relaxed relative z-10 text-gray-800">
+                <p class="text-2xl text-pink-600 dancing-font">Priscila,</p>
                 
+                <p class="first-letter:text-3xl first-letter:font-bold first-letter:text-rose-700">Não foram apenas 68km que nos separaram desde aquele dia na Carreta da Alegria. Foram sorrisos que cruzaram no meio da multidão, olhares que se encontraram por acaso, e <span class="font-semibold text-rose-600">um sentimento que surgiu sem pedir licença</span>.</p>
                 
+                <p>Você apareceu na minha vida como aquele tipo de encontro que marca para sempre. Um daqueles momentos que a gente nunca esquece, que fica guardado no coração com um brilho especial.</p>
+                
+                <p>Sei que a vida nos colocou em caminhos diferentes, com histórias distintas e responsabilidades que cada um carrega. Mas quero que saiba que <span class="font-semibold text-rose-600">o que sinto por você é verdadeiro, puro e respeitoso</span>.</p>
+                
+                <p>Admiro a mulher que você é - <span class="font-semibold">forte, dedicada, cheia de luz e de amor para dar</span>. E mesmo que esse sentimento precise ficar guardado em algum lugar entre a realidade e o sonho, <span class="text-rose-700 font-semibold">ele existe, é real, e é bonito demais para não ser celebrado</span>.</p>
+                
+                <p>Você me mostrou que <span class="font-semibold text-pink-600">o coração não escolhe hora nem lugar para bater mais forte</span>. Que às vezes, um sorriso é suficiente. Um olhar é tudo. Um momento pode mudar tudo.</p>
+                
+                <p>Obrigado por ter cruzado o meu caminho. Obrigado por ser você. Obrigado por, mesmo que brevemente, ter deixado marca em mim que jamais desaparecerá.</p>
+                
+                <div class="text-center mt-12 p-8 bg-gradient-to-r from-pink-100 to-rose-100 rounded-xl">
+                    <p class="dancing-font text-3xl text-rose-700 mb-2">Com todo o meu coração,</p>
+                    <p class="dancing-font text-xl text-pink-600">Alguém que te admira profundamente</p>
+                    <div class="flex justify-center mt-4 text-2xl gap-2">
+                        <span class="heart-beat">💖</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="text-center fade-in">
+            <h3 class="playfair-font text-5xl mb-4 text-rose-700 text-glow">Nossos Sons</h3>
+            <p class="text-xl text-gray-700 mb-12 italic dancing-font">A trilha sonora do nosso encontro</p>
             
-            <button onclick="showMessage()" class="bg-gradient-to-r from-pink-500 to-rose-500 text-white px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition-all transform hover:scale-105">
-                <i class="fas fa-heart mr-2"></i> Mensagem Especial
-            </button>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16 max-w-3xl mx-auto">
+                <div class="bg-gradient-to-br from-pink-50 to-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition-all transform hover:scale-105 duration-300">
+                    <div class="mb-4 rounded-lg overflow-hidden border-4 border-pink-300 shadow-md">
+                        <video width="100%" height="220" controls style="background: linear-gradient(135deg, #ffc0cb, #ffb6d9);">
+                            <source src="vid/Deixa Ela Saber.mp4" type="video/mp4">
+                            Seu navegador não suporta a tag de vídeo.
+                        </video>
+                    </div>
+                    <p class="dancing-font text-2xl text-rose-700 font-semibold mb-1">Deixa Ela Saber</p>
+                    <p class="text-sm text-gray-600">A música que nos uniu</p>
+                </div>
+                <div class="bg-gradient-to-br from-rose-50 to-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition-all transform hover:scale-105 duration-300">
+                    <div class="mb-4 rounded-lg overflow-hidden border-4 border-rose-300 shadow-md">
+                        <video width="100%" height="220" controls style="background: linear-gradient(135deg, #ffb6d9, #ff69b4);">
+                            <source src="vid/Ao Vivo.mp4" type="video/mp4">
+                            Seu navegador não suporta a tag de vídeo.
+                        </video>
+                    </div>
+                    <p class="dancing-font text-2xl text-rose-700 font-semibold mb-1">Ao Vivo</p>
+                    <p class="text-sm text-gray-600">A distância que não nos separa</p>
+                </div>
+            </div>
             
-            <div id="specialMessage" class="hidden mt-6 bg-white p-6 rounded-lg shadow-lg max-w-md mx-auto">
-                <p class="dancing-font text-xl mb-4">Priscila, mesmo que nosso tempo juntos tenha sido breve, saiba que você deixou uma marca doce no meu coração. Que um dia eu te traga toda a felicidade que você merece.</p>
-                <div class="flex justify-center">
-                    <i class="fas fa-heart text-rose-600 mr-2"></i>
-                    <i class="fas fa-heart text-pink-500 mr-2"></i>
-                    <i class="fas fa-heart text-rose-400"></i>
+            <div id="specialMessage" class="mt-12 bg-gradient-to-r from-pink-100 via-rose-50 to-pink-100 p-10 rounded-2xl shadow-2xl max-w-2xl mx-auto relative overflow-hidden fade-in">
+                <div class="absolute -top-20 -right-20 w-40 h-40 bg-pink-200 rounded-full opacity-20 blur-3xl"></div>
+                <div class="absolute -bottom-20 -left-20 w-40 h-40 bg-rose-200 rounded-full opacity-20 blur-3xl"></div>
+                <div class="relative z-10">
+                    <p class="text-5xl mb-6 text-center">💕</p>
+                    <p class="dancing-font text-2xl mb-6 text-rose-800">Uma Mensagem do Coração</p>
+                    <p class="text-lg text-gray-800 leading-relaxed mb-6">Priscila, mesmo que nosso tempo juntos tenha sido breve como um suspiro, você deixou uma marca <span class="font-semibold text-rose-700">tão profunda e tão doce</span> no meu coração.</p>
+                    <p class="text-lg text-gray-800 leading-relaxed mb-6">Você é daquelas pessoas que a gente nunca esquece. Daquelas que deixam um brilho nos olhos e um sorriso no rosto mesmo quando estão longe.</p>
+                    <p class="text-lg text-gray-800 leading-relaxed mb-8"><span class="text-pink-700 font-semibold text-xl">Que a vida</span> te traga toda a felicidade, toda a alegria, todo o amor que você merece e muito mais. Que você brilhe como merece brilhar.</p>
+                    <div class="flex justify-center gap-3">
+                        <i class="fas fa-heart text-rose-600 text-2xl heart-beat"></i>
+                        <i class="fas fa-heart text-pink-500 text-2xl heart-beat" style="animation-delay: 0.2s"></i>
+                        <i class="fas fa-heart text-rose-400 text-2xl heart-beat" style="animation-delay: 0.4s"></i>
+                    </div>
                 </div>
             </div>
         </section>
     </main>
 
-    <footer class="bg-rose-900 text-white py-8 text-center">
-        <div class="container mx-auto px-4">
-            <p class="mb-4">Feita com Carinho</p>
-            <p class="text-sm opacity-75">Feito com respeito e admiração</p>
+    <footer class="bg-gradient-to-r from-rose-900 via-pink-900 to-rose-900 text-white py-12 text-center relative overflow-hidden">
+        <div class="absolute inset-0 opacity-20">
+            <div class="absolute top-5 left-10 text-3xl animate-bounce heart-float">💖</div>
+            <div class="absolute top-20 right-12 text-2xl animate-bounce heart-float" style="animation-delay: 0.3s">💕</div>
+            <div class="absolute bottom-10 left-20 text-2xl animate-bounce heart-float" style="animation-delay: 0.6s">💗</div>
+        </div>
+        <div class="container mx-auto px-4 relative z-10">
+            <p class="dancing-font text-2xl mb-3 text-pink-200">Feita com Todo o Coração</p>
+            <p class="text-lg mb-4 opacity-90">Para Priscila, com respeito e admiração genuína</p>
+            <div class="flex justify-center gap-3 mb-4">
+                <i class="fas fa-heart text-pink-400"></i>
+                <i class="fas fa-heart text-rose-400"></i>
+                <i class="fas fa-heart text-pink-400"></i>
+            </div>
+            <p class="text-sm opacity-75">"O amor verdadeiro não se mede pela distância, mas pela profundidade do que se sente"</p>
         </div>
     </footer>
 
